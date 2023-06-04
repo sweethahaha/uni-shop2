@@ -1,5 +1,7 @@
 <template>
   <view>
+    <!-- 使用自定义的叟座组件 -->
+    <my-search @myclick="gotoSearch"></my-search>
     <view class="scroll-view-container">
       <!-- 左侧的滑动区域 -->
       <scroll-view scroll-y="true" :style="{height:wh+'px'}" class="left-scroll-view">
@@ -49,7 +51,7 @@
     onLoad() {
       //获取设备可用屏幕高度
      const winInfo = uni.getWindowInfo()
-     this.wh = winInfo.windowHeight
+     this.wh = winInfo.windowHeight - 50
      // 获取分类列表数据
      this.getcateList()
     },
@@ -73,8 +75,14 @@
         uni.navigateTo({
           url:'/subpkg/goods_list/goods_list?cid=' + item3.cat_id
         })
+      },
+      gotoSearch() {
+        uni.navigateTo({
+          url:'/subpkg/search/search'
+        })
       }
-    }
+    },
+   
   }
 </script>
 
