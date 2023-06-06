@@ -1,7 +1,9 @@
 <template>
   <view>
-    <!-- 使用自定义的叟座组件 -->
-    <my-search @myclick="gotoSearch"></my-search>
+    <!-- 使用自定义的搜索组件 -->
+    <view class="search-box">
+      <my-search @myclick="gotoSearch"></my-search>
+    </view>
     <view class="scroll-view-container">
       <!-- 左侧的滑动区域 -->
       <scroll-view scroll-y="true" :style="{height:wh+'px'}" class="left-scroll-view">
@@ -34,6 +36,7 @@
 </template>
 
 <script>
+  import tabbarBadge from '@/mixin/tabbar-badge.js'
   export default {
     data() {
       return {
@@ -48,6 +51,7 @@
         scrollTop:0
       };
     },
+    mixins:[tabbarBadge],
     onLoad() {
       //获取设备可用屏幕高度
      const winInfo = uni.getWindowInfo()
@@ -87,6 +91,11 @@
 </script>
 
 <style lang="scss">
+  .search-box {
+    position:sticky;
+    left:0;
+    top: 0;
+  }
 .scroll-view-container {
   display: flex;
   .left-scroll-view {

@@ -46,6 +46,7 @@
 </template>
 
 <script>
+  import tabbarBadge from '@/mixin/tabbar-badge.js'
   export default {
     data() {
       return {
@@ -57,6 +58,7 @@
         floorList: []
       };
     },
+    mixins:[tabbarBadge],
     methods: {
       async getSwiperList() {
         const {
@@ -115,6 +117,7 @@
   .search-box {
     position: sticky;
     top: 0;
+    left: 0;
     z-index: 999;
   }
   swiper {

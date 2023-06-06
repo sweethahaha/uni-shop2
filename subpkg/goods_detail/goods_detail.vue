@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import {mapState,mapGetters} from 'vuex'
   export default {
     data() {
       return {
@@ -48,7 +49,7 @@
         		}, {
         			icon: 'cart',
         			text: '购物车',
-        			info: 1
+        			info: 0
         		}],
             // 右侧按钮组的配置对象
         	    buttonGroup: [{
@@ -63,6 +64,21 @@
         	    }
         	    ]
       };
+    },
+    computed:{
+      ...mapState('cart',['cart']),
+      ...mapGetters('cart',['total'])
+    },
+    watch:{
+      total:{
+        immediate:true,
+        handler(newValue) {
+        const findResult = this.options.find(item => item.text === '购物车')
+        if(findResult) {
+          findResult.info = newValue
+        }
+      },
+      }
     },
     onLoad(options) {
       const goods_id = options.goods_id
@@ -79,8 +95,18 @@
            }
       	  },
       	  buttonClick (e) {
-      	    console.log(e)
-      	    this.options[1].info++
+      	    if(e.content.text === '加入购物车') {
+              const {goods_id,goods_name,goods_price,goods_small_logo} = this.goods_info
+              const goods = {
+                goods_id,
+                goods_name,
+                goods_price,
+                goods_small_logo,
+                goods_state:true, //商品的勾选状态
+                goods_count:1
+              }
+              this.$store.commit('cart/addToCart',goods)
+            }
       	  }
       	,
       // 定义获取商品详情数据的方法
